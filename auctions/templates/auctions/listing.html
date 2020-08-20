@@ -1,0 +1,53 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if listing %}
+<div class="row">
+  <div class="col-7">
+    <img id="big_image" src="static/auctions/{{ listing.url_image }}" alt="">
+  </div>
+  <div class="col-5" id="div_ofertas">
+    <h4>{{ listing.title }}</h4>
+    <h5>Price: <b><span>$</span>{{ listing.starting_bid }}.00</b></h5>
+
+    <div id='div_formulario'>
+      {{ bid_count }} bid(s) so far.
+      {% if user.is_authenticated %}
+        {% if bid.user == user %}
+          your bid is current bid.
+        {% else %}
+          {{ bid.user.username }} is current bid.
+        {% endif %}
+      {% endif %}
+      <h5>Bid: <b><span>$</span>{{ bid }}</b>
+        <span id='bid_user'>Placed by: {{ bid.user}}.</span>
+      </h5>
+      {% if user.is_authenticated %}
+      <form class="" action="{% url 'listing' listing.id %}" method="post">
+        {% csrf_token %}
+          {{ form }}
+
+          <input type="submit" name="submit" value="Place Bid">
+        {% endif %}
+      </form>
+    </div>
+    {% if message %}
+    <p style='color:red;'><strong>{{ message }}</strong></p>
+    {% endif %}
+    <br>
+    <hr>
+    <h3>Details</h3>
+    <h5>Listed by: <b>{{ listing.user }}.</b></h5>
+    {% if listing.category %}
+      <h5>Category: <b>{{ listing.category }}.</b></h5>
+    {% else %}
+      <h5>Category: <b>No category for this listed.</b></h5>
+    {% endif %}
+  </div>
+</div>
+{% else %}
+  <h1>No listing</h1>
+{% endif %}
+
+
+{% endblock %}

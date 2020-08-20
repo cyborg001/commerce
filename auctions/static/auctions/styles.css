@@ -1,0 +1,27 @@
+body {
+    padding: 10px;
+}
+#imagen_principal {
+  width:300px;
+}
+#div_listing{
+  margin:1px;
+  margin-top:15px;
+  border-style: solid;
+  border-width: thin;
+  border-color: lightgray;
+}
+#big_image {
+  width: 800px;
+}
+#bid_user {
+  font-size:12px;
+  font-style: italic;
+}
+#div_formulario {
+  width:400px;
+  background-color: lightgreen;
+}
+#div_ofertas {
+  padding-top: 100px;
+}
