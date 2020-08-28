@@ -1,53 +1,121 @@
 {% extends "auctions/layout.html" %}
+{% block title %}
+  {% if listing %}
+  {{ listing.title }}
+  {% endif %}
+{% endblock%}
+
 
 {% block body %}
 {% if listing %}
-<div class="row">
-  <div class="col-7">
-    <img id="big_image" src="static/auctions/{{ listing.url_image }}" alt="">
-  </div>
-  <div class="col-5" id="div_ofertas">
-    <h4>{{ listing.title }}</h4>
-    <h5>Price: <b><span>$</span>{{ listing.starting_bid }}.00</b></h5>
+  {% if user == bid.user and listing.is_active == False %}
+      <div class="alert alert-success" role="alert">
+        <h3>Congratulations < {{ user }} >, you have one this listing!</h3>
+      </div>
+  {% endif %}
 
-    <div id='div_formulario'>
-      {{ bid_count }} bid(s) so far.
-      {% if user.is_authenticated %}
-        {% if bid.user == user %}
-          your bid is current bid.
-        {% else %}
-          {{ bid.user.username }} is current bid.
-        {% endif %}
+  <div class="row">
+
+    <div class="col-7">
+      {% if listing.url_image %}
+        <img id="big_image" src="static/auctions/{{ listing.url_image }}" alt="">
+      {% else %}
+        <h6 style="padding-top:200px; padding-left:50px;">No images for this listing.</h6>
       {% endif %}
-      <h5>Bid: <b><span>$</span>{{ bid }}</b>
-        <span id='bid_user'>Placed by: {{ bid.user}}.</span>
-      </h5>
-      {% if user.is_authenticated %}
-      <form class="" action="{% url 'listing' listing.id %}" method="post">
-        {% csrf_token %}
-          {{ form }}
-
-          <input type="submit" name="submit" value="Place Bid">
-        {% endif %}
-      </form>
     </div>
-    {% if message %}
-    <p style='color:red;'><strong>{{ message }}</strong></p>
-    {% endif %}
-    <br>
-    <hr>
-    <h3>Details</h3>
-    <h5>Listed by: <b>{{ listing.user }}.</b></h5>
-    {% if listing.category %}
-      <h5>Category: <b>{{ listing.category }}.</b></h5>
-    {% else %}
-      <h5>Category: <b>No category for this listed.</b></h5>
-    {% endif %}
+
+    <div class="col-5" id="div_ofertas">
+      <h4>{{ listing.title }}</h4>
+      <h5>Starting Bid: <b><span>$</span>{{ listing.price }}.00</b></h5>
+      {% if user.is_authenticated %}
+        <a href="{% url 'addLista' listing.id %}"><span id='span_watchlist'>Whatchlist</span></a>
+      {% endif %}
+      <div id='div_formulario'>
+        {{ bid_count }} bid(s) so far.
+        {% if user.is_authenticated %}
+          {% if bid.user == user %}
+            your bid is current bid.
+          {% else %}
+            {{ bid.user.username }} is current bid.
+          {% endif %}
+        {% endif %}
+        <h5>Bid: <b><span>$</span>{{ bid }}</b>
+          <span id='bid_user'>Placed by: {{ bid.user}}.</span>
+        </h5>
+        {% if user.is_authenticated %}
+          {% if listing.is_active == True %}
+            <form class="" action="{% url 'listing' listing.id %}" method="post">
+              {% csrf_token %}
+                {{ form }}
+                <input type="submit" name="submit" value="Place Bid">
+            </form>
+
+            <form class="" action="{% url 'close' listing.id %}" method="post">
+              {% csrf_token %}
+              <input type="submit" name="close" value="Close Listing">
+            </form>
+          {% else %}
+            <h4 style="color:red;">This listing is inactive.</h4>
+          {% endif %}
+          <!-- {% if user == listing.user %} -->
+
+          <!-- {% endif %} -->
+        {% endif %}
+      </div>
+      {% if message %}
+      <p style='color:red;'><strong>{{ message }}</strong></p>
+      {% endif %}
+      <br>
+      <hr>
+      <h3>Details</h3>
+      <h5>Listed by: <b>{{ listing.user }}.</b></h5>
+      {% if listing.category %}
+        <h5>Category: <b>{{ listing.category }}.</b></h5>
+      {% else %}
+        <h5>Category: <b>No category for this listed.</b></h5>
+      {% endif %}
+    </div>
+<!-- aqui van 3 columnas de 4, de las cuales en la central pondremos los comments -->
+</div>
+<hr>
+<div class="row">
+  <div class="col-4" >
+
+  </div>
+
+  <div id="div-comentarios" class="col-4">
+      <h5>Comments</h5>
+
+        {% for comment in comments %}
+        <div class="" id="div_comentario">
+          <h5><span id="user" >User:</span> {{ comment.user }}</h5>
+          <p id="p_comment">{{ comment.comentario }}</p>
+          <p id="fecha_comment">posteado el: {{ comment.start_time }}</p>
+        </div>
+        <hr>
+        {% empty %}
+          <h5>No comments</h5>
+        {% endfor %}
+
+      {% if user.is_authenticated %}
+        <form class="" action="{% url 'comment' listing.id %}" method="post">
+          {% csrf_token %}
+          {{ commentform.as_p}}
+          <input type="submit" name="submi" value="Place Comment">
+        </form>
+      {% endif %}
+  </div>
+  <div class="col-4">
+
   </div>
 </div>
+
+</div>
+
+
+
 {% else %}
   <h1>No listing</h1>
 {% endif %}
-
 
 {% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'auctions/layout.html' %}
+{% block title %}
+  Categories
+{% endblock %}
+
+{% block body %}
+{% for categoria in categorias %}
+  <div class="">
+    {% if categoria == ''%}
+      <span class="category"><h4>Variados</h4></a> </span>
+    {% else %}
+      <span class="category"><h4>{{ categoria }}</h4></a> </span>
+    {% endif %}
+      {% for listing in listings %}
+        {% if listing.category == categoria%}
+        <div class="row" id="div_listing">
+          <div class="col-4">
+            {% if listing.url_image%}
+            {% load static %}
+              <a href="{% url 'listing' listing.id %}"><img id="imagen_principal" src="{% static listing.url_image %}" alt="Motor mitsubishi"></a>
+            {% else %}
+              <br><br>
+              <h6 style="padding-top:70px;">No image for this listing.</h6>
+            {% endif %}
+          </div>
+          <div class="col-8 div_listing_title">
+            {% if listing.title %}
+              <a href="{% url 'listing' listing.id %}"><p><h4>{{ listing.title }}</h4></p></a>
+            {% endif %}
+
+            {% if listing.description %}
+              <p><h4><b>{{ listing.description }}</b></h4></p>
+            {% endif %}
+
+            {% if listing.price %}
+              <p><h4>Price: <b><span>$</span>{{ listing.price }}.00</b></h4></p>
+            {% endif %}
+
+            <p>Posted: {{ listing.start_time }}</p>
+
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+  </div>
+{% endfor %}
+{% endblock %}

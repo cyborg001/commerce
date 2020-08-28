@@ -4,12 +4,13 @@ body {
 #imagen_principal {
   width:300px;
 }
-#div_listing{
+.div_listing{
   margin:1px;
-  margin-top:15px;
+  margin-top:5px;
   border-style: solid;
   border-width: thin;
   border-color: lightgray;
+  height: 260px;
 }
 #big_image {
   width: 800px;
@@ -19,9 +20,89 @@ body {
   font-style: italic;
 }
 #div_formulario {
+  margin-top: 20px;
   width:400px;
   background-color: lightgreen;
 }
 #div_ofertas {
-  padding-top: 100px;
+  padding-top: 80px;
+}
+#div_form_create {
+  font-size: 12px;
+  width: 450px;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+#span_watchlist {
+  font-size: 12px;
+  color: white;
+  background: gray;
+  border-radius: 3px;
+  padding:2px;
+  font-weight: bold;
+}
+#span_removewatch {
+  margin-left: 0;
+  margin-right: 0;
+  color:darkblue;
+}
+#lista_count {
+  display:inline-flex;
+  width:auto;
+  height: 19px;
+  top:3px;
+  position: relative;
+  border-radius: 2px;
+  background-color:#7B7D7D;
+  color:white;
+  font-size: 14px;
+}
+#div_comentario {
+  border-style: solid;
+  background-color: lightgray;
+  display:block;
+}
+#fecha_comment {
+  color:green;
+  text-align: right;
+  font-style: oblique;
+}
+#user {
+  font-size: 16px;
+}
+#p_comment {
+  background-color: white;
+}
+.category {
+  text-align: center;
+  padding-top: 80px;
+  color:green;
+}
+.div_listing_title {
+  padding-top:20px;
+  /* background-image: linear-gradient(to right, #FAFEFE, lightgray); */
+  background-color: #FAFEFE;
+}
+
+footer{
+
+}
+.body {
+  height: 200px;
+  background-color: lightpink;
+  background-image: url('/static/auctions/image/navbar2.jpg');
+  background-attachment: local;
+  min-height: 50px;
+  min-width:  50px;
+  color:white;
+}
+
+.nav_color{
+  color:black;
+  background-color: lightgray;
+}
+.categories {
+  padding-top: 50px;
+  text-align: center;
 }

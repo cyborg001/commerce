@@ -4,20 +4,27 @@
     <h2>Active Listings</h2>
 
     {% for listing in listings %}
-    <div class="row" id="div_listing">
+    <div class="row div_listing" id="{{ listing.id }}">
       <div class="col-4">
-        <a href="{% url 'listing' listing.id %}"><img id="imagen_principal" src="static/auctions/{{ listing.url_image }}" alt="Motor mitsubishi"></a>
+        {% if listing.url_image%}
+          <a href="{% url 'listing' listing.id %}"><img id="imagen_principal" src="static/auctions/{{ listing.url_image }}" alt="Motor mitsubishi"></a>
+        {% else %}
+          <br><br>
+          <h6>No image for this listing.</h6>
+        {% endif %}
       </div>
-      <div class="col-8">
+      <div class="col-8 div_listing_title">
         {% if listing.title %}
           <a href="{% url 'listing' listing.id %}"><p><h4>{{ listing.title }}</h4></p></a>
-        {% endif %}
-        {% if listing.starting_bid %}
-          <p><h4>Price: <b><span>$</span>{{ listing.starting_bid }}.00</b></h4></p>
         {% endif %}
         {% if listing.description %}
           <p><h4><b>{{ listing.description }}</b></h4></p>
         {% endif %}
+
+        {% if listing.price %}
+          <p><h4>Price: <b><span>$</span>{{ listing.price }}.00</b></h4></p>
+        {% endif %}
+
         <p>Posted: {{ listing.start_time }}</p>
 
       </div>
@@ -25,7 +32,4 @@
       {% empty %}
         No listings yet!
       {% endfor %}
-
-
-    TODO
 {% endblock %}

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+    ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,5 +118,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
-
+STATICFILES_DIRS=[
+    '/static/',
+    '/static/categories/auctions/',
+    'static/auctions',
+    '/static/auctions/categories/',
+    '/static/categories/'
+    '/categories/auctions'
+]
 STATIC_URL = '/static/'
