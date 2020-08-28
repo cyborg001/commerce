@@ -228,9 +228,7 @@ def close(request,listing_id):
 def comment_view(request,listing_id):
     listing = Auction_listing.objects.get(pk=listing_id)
     if request.method=='POST':
-        print('esto es un post')
         commentform = CommentForm(request.POST)
-        print(commentform)
         if commentform.is_valid():
             comentario = request.POST['comentario']
             comment = Comment(comentario=comentario, user= request.user ,
@@ -242,7 +240,6 @@ def comment_view(request,listing_id):
 def categories(request):
     listings = Auction_listing.objects.filter(is_active=True)
     for n in listings:
-        print(n.category)
     categorias = {listing.category for listing in listings}
     for listing in listings:
         if listing.url_image != '':
